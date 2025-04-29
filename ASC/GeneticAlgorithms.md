@@ -55,7 +55,7 @@
 | **Genotype** | Internal encoding (not directly visible); like source code | Binary string `110101` |
 | **Phenotype** | Visible behavior/output from genotype | Robot moves 3 steps North based on `110101` |
 
-## Quick Highlights
+### Quick Highlights
 - **Allele** → Value of a gene.
 - **Gene** → A single parameter.
 - **Chromosome** → Set of genes (solution).
@@ -149,7 +149,7 @@
 | **Use Case** | Good for early-phase exploration or multimodal problems. | Good for real-time or diversity-critical optimization. |
 
 ----
-----
+
 
 ## 🔹 **Encoding in Genetic Algorithms**
 - **Encoding** = Process of representing individuals/solutions (chromosomes) in GA.
@@ -218,5 +218,88 @@
 - Programs/solutions represented as **function trees**.
 
 ---
+s a clear **point-wise explanation** of **Selection Strategies in Genetic Algorithms**, ideal for **learning and MCQ exams**:
 
-Would you like a quick quiz or flashcards based on this for practice?
+---
+
+## 🔹 **SELECTION**
+- Selection is the process of **choosing parents** from the population for crossover.
+- It emphasizes **fitter individuals**, aiming to produce **better offspring**.
+- It must be balanced:
+  - **Too strong** selection → Premature convergence (less diversity).
+  - **Too weak** selection → Slower evolution.
+
+---
+
+### 🔹 **Types of Selection Strategies**
+
+#### 1. **Random Selection**
+- Parents are chosen **randomly**, regardless of fitness.
+- Provides **high genetic diversity** but may not preserve the best solutions.
+- More **disruptive** than Roulette Wheel Selection.
+- Often used as a **baseline or control method**.
+
+---
+
+#### 2. **Roulette Wheel Selection (Fitness Proportionate Selection)**
+
+##### 🟢 Concept:
+- Imagine a **roulette wheel** divided into slices proportional to individual fitness.
+- Individuals with **higher fitness** get **larger slices**, thus a **higher chance** of being selected.
+- Selection is based on **random numbers** and **cumulative fitness ranges**.
+
+##### ⚙️ **How it works**:
+1. **Calculate total fitness** of the population (T).
+2. Each individual gets a **slot**: `[start, end)` based on cumulative fitness.
+3. For N individuals:
+   - Generate a random number `r ∈ [0, T)`.
+   - Select the individual whose slot contains `r`.
+
+##### ✅ **Advantages**:
+- Simple to implement.
+- Maintains a **fitness-based probability** of selection.
+
+##### ❌ **Limitations**:
+- Can be **noisy**.
+- **Low-fitness individuals may never get selected**.
+- Individuals may be selected **multiple times**.
+- Performance depends on **variance of fitness** in population.
+
+---
+
+### 🔹 **Worked Example:**
+
+#### Given:
+- Chromosomes: V, W, X, Y, Z
+- Fitness: V = 12, W = 8, X = 5, Y = 15, Z = 10
+- Total Fitness, T = 50
+- Random Numbers: `r = [14, 22, 7, 30, 11]`
+
+#### Slot Assignment (Cumulative Ranges):
+| Chromosome | Fitness | Slot Range     |
+|------------|---------|----------------|
+| V          | 12      | [0 - 12)       |
+| W          | 8       | [12 - 20)      |
+| X          | 5       | [20 - 25)      |
+| Y          | 15      | [25 - 40)      |
+| Z          | 10      | [40 - 50)      |
+
+#### Selection Based on `r`:
+- r = 14 → falls in W’s range → **W selected**
+- r = 22 → falls in X’s range → **X selected**
+- r = 7 → falls in V’s range → **V selected**
+- r = 30 → falls in Y’s range → **Y selected**
+- r = 11 → falls in V’s range → **V selected**
+
+✅ **Selected Parents**: `[W, X, V, Y, V]`
+
+---
+
+### 🔑 **Key Takeaways for Exams**:
+- **Selection** drives the **reproductive success** of individuals.
+- **Roulette Wheel** = Probability proportional to fitness.
+- **Random Selection** = Equal chance for all, no fitness bias.
+- Selection must maintain **diversity** while promoting **fit individuals**.
+
+---
+
